@@ -12,7 +12,9 @@ Gem::Specification.new do |s|
   s.homepage     = 'https://github.com/jarrett/authlogic_email_token'
   s.license      = 'MIT'
   
-  s.add_runtime_dependency 'authlogic'
+  s.add_runtime_dependency 'authlogic', '~> 3'
   s.add_development_dependency 'minitest', '~> 5'
   s.add_development_dependency 'minitest-reporters', '~> 1'
+  s.add_development_dependency 'timecop', '~> 0'
+  s.add_development_dependency 'mocha', '~> 1'
 end

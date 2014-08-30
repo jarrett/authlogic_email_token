@@ -36,10 +36,11 @@ module Authlogic::ActsAsAuthentic::EmailToken
     def self.included(klass)
       # Do nothing if the email_token column is missing. If the email_token column
       # is present but not email_token_updated_at, raise.
-      if !klass.column_names.include? 'email_token'
+      if !klass.column_names.map(&:to_s).include? 'email_token'
         return
-      elsif !klass.column_names.include? 'email_token_updated_at'
+      elsif !klass.column_names.map(&:to_s).include? 'email_token_updated_at'
         raise(
+          ::Authlogic::ActsAsAuthentic::EmailToken::DBStructureError,
           "#{klass.name} has an email_token column but not email_token_updated_at. " +
           " You must add the latter. (Should be :datetime, null: false.)"
         )
@@ -104,7 +105,7 @@ module Authlogic::ActsAsAuthentic::EmailToken
         self.email_token_updated_at = Time.now
         self.email_token = Authlogic::Random.friendly_token
       end
-  
+      
       # Same as reset_email_token, but then saves the record afterwards.
       def reset_email_token!
         reset_email_token
@@ -112,4 +113,6 @@ module Authlogic::ActsAsAuthentic::EmailToken
       end
     end
   end
+  
+  class DBStructureError < StandardError; end
 end
