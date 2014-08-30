@@ -3,6 +3,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'timecop'
 require 'mocha/mini_test'
+require 'database_cleaner'
 require 'rails'
 Minitest::Reporters.use! Minitest::Reporters::DefaultReporter.new
 
@@ -16,3 +17,11 @@ require 'authlogic/acts_as_authentic/email_token/railtie'
 Authlogic::ActsAsAuthentic::EmailToken::Railtie.instance.run_initializers
 
 require 'models'
+
+DatabaseCleaner.strategy = :truncation
+
+class Minitest::Test
+  def setup
+    DatabaseCleaner.clean
+  end
+end

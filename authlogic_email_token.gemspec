@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name         = 'authlogic_email_token'
-  s.version      = '0.0.0'
-  s.date         = '2014-08-29'
+  s.version      = '0.0.1'
+  s.date         = '2014-08-30'
   s.summary      = 'Authlogic extension for email confirmation'
   s.description  = "Adds email_token and email_token_updated_at columns. Works like " +
                    "Authlogic's perishable_token, but doesn't reset on every request. " +
@@ -17,4 +17,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'minitest-reporters', '~> 1'
   s.add_development_dependency 'timecop', '~> 0'
   s.add_development_dependency 'mocha', '~> 1'
+  s.add_development_dependency 'database_cleaner', '~> 1'
 end

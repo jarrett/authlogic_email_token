@@ -4,7 +4,7 @@
 # Include this module in your +User+ model and add a +new_email+ column to the +users+
 # table:
 # 
-#   add_column :users, :new_email, :string, null: true, after: :email
+#   add_column :users, :new_email, :string, after: :email
 # 
 # You can then use the +new_email+ attribute in your account settings form like so:
 # 
@@ -25,7 +25,6 @@
 # 
 
 module Authlogic::ActsAsAuthentic::EmailToken::Confirmation
-  
   # Call this when you have verified the user's email address. (Typically, as a result of
   # the user clicking the link in a confirmation email.)
   # 
@@ -42,7 +41,7 @@ module Authlogic::ActsAsAuthentic::EmailToken::Confirmation
   # +activation_method+.)
   def confirm_email
     send(self.class.activation_method) if respond_to?(self.class.activation_method)
-    if new_email.present?
+    if read_attribute(:new_email).present?
       self.email = new_email
       self.new_email = nil
     end
@@ -84,6 +83,13 @@ module Authlogic::ActsAsAuthentic::EmailToken::Confirmation
   #     MyOtherMailer.whatever_message(user).deliver
   #   end
   # 
+  # Or, instead of providing a block, you can override the default names like so:
+  # 
+  #   acts_as_authentic do |c|
+  #     c.confirmation_mailer_class = :MyOtherMailer
+  #     c.confirmation_mailer_method = :whatever_message
+  #   end
+  # 
   # Recommended usage looks something like this:
   #
   #   class UsersController < ApplicationController
@@ -115,7 +121,11 @@ module Authlogic::ActsAsAuthentic::EmailToken::Confirmation
       if block_given?
         yield
       else
-        UserMailer.email_confirmation(self, controller).deliver
+        name = self.class.confirmation_mailer_class.to_s
+        klass = name.split('::').inject(Object) do |mod, klass|
+          mod.const_get klass
+        end
+        klass.send(self.class.confirmation_mailer_method, self, controller).deliver
       end
       true
     else

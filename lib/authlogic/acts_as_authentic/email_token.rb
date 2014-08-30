@@ -30,6 +30,22 @@ module Authlogic::ActsAsAuthentic::EmailToken
       rw_config(:activation_method, value, :activate)
     end
     alias_method :activation_method=, :activation_method
+    
+    # Configures the name of the confirmation mailer class.
+    # +Authlogic::ActsAsAuthentic::EmailToken::maybe_deliver_email_confirmation!+
+    # for more info.
+    def confirmation_mailer_class(value = nil)
+      rw_config(:confirmation_mailer_class, value, :UserMailer)
+    end
+    alias_method :confirmation_mailer_class=, :confirmation_mailer_class
+    
+    # Configures the name of the confirmation mailer method.
+    # +Authlogic::ActsAsAuthentic::EmailToken::maybe_deliver_email_confirmation!+
+    # for more info.
+    def confirmation_mailer_method(value = nil)
+      rw_config(:confirmation_mailer_method, value, :email_confirmation)
+    end
+    alias_method :confirmation_mailer_method=, :confirmation_mailer_method
   end
   
   module Methods
@@ -81,6 +97,8 @@ module Authlogic::ActsAsAuthentic::EmailToken
         age = age.to_i
         
         # Authlogic builds its SQL by hand, but I prefer Arel. The logic is the same.
+        # No need to add an IS NOT NULL clause, because above, we return if the given
+        # token is blank.
         t = arel_table
         conditions = t[:email_token].eq(token)
         if age > 0

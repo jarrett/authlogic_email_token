@@ -54,6 +54,17 @@ class EmailTokenTest < Minitest::Test
     end
   end
   
+  def test_find_using_email_token_custom_expiration
+    # The CustomExpiration class calls email_token_valid_for=.
+    o = CustomExpiration.create!
+    Timecop.travel(367.days.from_now) do
+      assert_nil CustomExpiration.find_using_email_token(o.email_token)
+    end
+    Timecop.travel(364.days.from_now) do
+      assert_equal o, CustomExpiration.find_using_email_token(o.email_token)
+    end
+  end
+  
   def test_find_using_email_token_with_invalid_token
     o = BasicModel.create!
     assert_nil BasicModel.find_using_email_token('InvalidToken')
