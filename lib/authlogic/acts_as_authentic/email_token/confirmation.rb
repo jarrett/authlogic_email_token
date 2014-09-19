@@ -153,5 +153,5 @@ module Authlogic::ActsAsAuthentic::EmailToken::Confirmation
     e.present? ? e : email
   end
   # Rails' text_field helper calls new_email_before_typecast.
-  alias_method :new_email_before_typecast, :new_email
+  alias_method :new_email_before_type_cast, :new_email
 end

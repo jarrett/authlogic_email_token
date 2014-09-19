@@ -103,5 +103,6 @@ class Confirmation < Minitest::Test
   def test_new_email_defaults_to_current_email
     o = Confirmable.new email: 'a@example.com'
     assert_equal 'a@example.com', o.new_email
+    assert_equal 'a@example.com', o.new_email_before_type_cast
   end
 end
