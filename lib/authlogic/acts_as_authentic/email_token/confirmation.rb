@@ -1,8 +1,7 @@
-# This module is an optional part of the authlogic_email_token gem. It provides some
-# standard logic for confirming email addresses.
+# This module provides some standard logic for confirming email addresses, both upon
+# signup and when an existing user changes her email address.
 # 
-# Include this module in your +User+ model and add a +new_email+ column to the +users+
-# table:
+# Include this module in your +User+ model.
 # 
 #   add_column :users, :new_email, :string, after: :email
 # 
@@ -94,7 +93,7 @@ module Authlogic::ActsAsAuthentic::EmailToken::Confirmation
   #
   #   class UsersController < ApplicationController
   #     def create
-  #       @user = User.new user_params
+  #       @user = User.new new_user_params
   #       if @user.save
   #         @user.maybe_deliver_email_confirmation! self
   #         redirect_to root_url, notice: 'Confirmation email sent.'
@@ -104,7 +103,7 @@ module Authlogic::ActsAsAuthentic::EmailToken::Confirmation
   #     end
   #     
   #     def update
-  #       if current_user.update_attributes user_params
+  #       if current_user.update_attributes existing_user_params
   #         if current_user.maybe_deliver_email_confirmation! self
   #           redirect_to(edit_user_url, notice: 'Confirmation email sent.'
   #         else
@@ -114,6 +113,17 @@ module Authlogic::ActsAsAuthentic::EmailToken::Confirmation
   #         render action: 'edit'
   #       end
   #     end
+  #     
+  #     private
+        
+        def existing_user_params
+          params.require(:user).permit(:new_email, :password, :password_confirmation)
+        end
+        
+        def new_user_params
+          params.require(:user).permit(:email, :password, :password_confirmation)
+        end
+  #
   #   end
   def maybe_deliver_email_confirmation!(controller)
     if email_changed_previously?
@@ -142,4 +152,6 @@ module Authlogic::ActsAsAuthentic::EmailToken::Confirmation
     e = read_attribute :new_email
     e.present? ? e : email
   end
+  # Rails' text_field helper calls new_email_before_typecast.
+  alias_method :new_email_before_typecast, :new_email
 end

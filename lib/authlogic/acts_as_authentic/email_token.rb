@@ -24,14 +24,16 @@ module Authlogic::ActsAsAuthentic::EmailToken
     end
     alias_method :email_token_valid_for=, :email_token_valid_for
     
-    # Configures the name of the account activation boolean column. See
+    # Configures the name of the account activation boolean column. The default method
+    # name is +activate+. See
     # +Authlogic::ActsAsAuthentic::EmailToken::Confirmation#confirm_email+ for more info.
     def activation_method(value = nil)
       rw_config(:activation_method, value, :activate)
     end
     alias_method :activation_method=, :activation_method
     
-    # Configures the name of the confirmation mailer class.
+    # Configures the name of the confirmation mailer class. The default class name is
+    # +UserMailer+. See
     # +Authlogic::ActsAsAuthentic::EmailToken::maybe_deliver_email_confirmation!+
     # for more info.
     def confirmation_mailer_class(value = nil)
@@ -39,7 +41,8 @@ module Authlogic::ActsAsAuthentic::EmailToken
     end
     alias_method :confirmation_mailer_class=, :confirmation_mailer_class
     
-    # Configures the name of the confirmation mailer method.
+    # Configures the name of the confirmation mailer method. The default method name is
+    # +email_confirmation+. See
     # +Authlogic::ActsAsAuthentic::EmailToken::maybe_deliver_email_confirmation!+
     # for more info.
     def confirmation_mailer_method(value = nil)
