@@ -42,7 +42,7 @@ module Authlogic::ActsAsAuthentic::EmailToken::Confirmation
     send(self.class.activation_method) if respond_to?(self.class.activation_method)
     if read_attribute(:new_email).present?
       self.email = new_email
-      self.new_email = nil
+      write_attribute :new_email, nil
     end
     reset_email_token
   end
@@ -153,4 +153,12 @@ module Authlogic::ActsAsAuthentic::EmailToken::Confirmation
   end
   # Rails' text_field helper calls new_email_before_typecast.
   alias_method :new_email_before_type_cast, :new_email
+  
+  # Like a normal attribute setter, except it is a no-op if the value is equal to the
+  # current value of #email.
+  def new_email=(e)
+    if e.present? and e != email
+      write_attribute :new_email, e
+    end
+  end
 end
