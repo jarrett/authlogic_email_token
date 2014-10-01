@@ -115,15 +115,14 @@ module Authlogic::ActsAsAuthentic::EmailToken::Confirmation
   #     end
   #     
   #     private
-        
-        def existing_user_params
-          params.require(:user).permit(:new_email, :password, :password_confirmation)
-        end
-        
-        def new_user_params
-          params.require(:user).permit(:email, :password, :password_confirmation)
-        end
-  #
+  #     
+  #     def existing_user_params
+  #       params.require(:user).permit(:new_email, :password, :password_confirmation)
+  #     end
+  #   
+  #     def new_user_params
+  #       params.require(:user).permit(:email, :password, :password_confirmation)
+  #     end
   #   end
   def maybe_deliver_email_confirmation!(controller)
     if email_changed_previously?
