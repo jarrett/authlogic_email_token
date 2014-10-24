@@ -75,28 +75,44 @@ class Confirmation < Minitest::Test
     assert o.maybe_deliver_email_confirmation!(c)
   end
   
-  def test_email_changed_previously
+  def test_email_changed_previously_returns_false_for_clean_record
     o = Confirmable.create! email: 'a@example.com'
     o.reload
     refute o.email_changed_previously?
-    
-    # Change #email.
-    o.update_attributes! email: 'b@example.com'
-    assert o.email_changed_previously?
-    
-    # Set #email to same thing.
+  end
+  
+  def test_email_changed_previously_returns_false_for_clean_record_with_new_email_set_to_same_value
+    o = Confirmable.create! email: 'a@example.com'
+    o.update_attributes! new_email: 'a@example.com'
     o.reload
-    o.update_attributes! email: 'b@example.com'
     refute o.email_changed_previously?
-    
-    # Change #new_email.
+  end
+  
+  def test_email_changed_previously_returns_true_when_email_changed
+    o = Confirmable.create! email: 'a@example.com'
     o.reload
-    o.update_attributes! new_email: 'c@example.com'
+    o.update_attributes! email: 'b@example.com'
     assert o.email_changed_previously?
-    
-    # Set #new_email to same thing.
+  end
+  
+  def test_email_changed_previously_returns_false_when_email_set_to_same_value
+    o = Confirmable.create! email: 'a@example.com'
     o.reload
-    o.update_attributes! new_email: 'c@example.com'
+    o.update_attributes! email: 'a@example.com'
+    refute o.email_changed_previously?
+  end
+  
+  def test_email_changed_previously_returns_true_when_new_email_changed
+    o = Confirmable.create! email: 'a@example.com'
+    o.reload
+    o.update_attributes! new_email: 'b@example.com'
+    assert o.email_changed_previously?
+  end
+  
+  def test_email_changed_previously_returns_false_when_new_email_set_to_same_value
+    o = Confirmable.create! email: 'a@example.com', new_email: 'b@example.com'
+    o.reload
+    o.update_attributes! new_email: 'b@example.com'
     refute o.email_changed_previously?
   end
   

@@ -1,3 +1,5 @@
+require 'bundler'
+Bundler.setup
 require 'minitest'
 require 'minitest/autorun'
 require 'minitest/reporters'
