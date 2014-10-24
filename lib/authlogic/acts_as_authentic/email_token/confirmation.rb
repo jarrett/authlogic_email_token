@@ -53,7 +53,6 @@ module Authlogic::ActsAsAuthentic::EmailToken::Confirmation
   end
   
   # Returns true if and only if:
-  # 
   #   * +email+ changed during the previous save; or
   #   * +new_email+ changed during the previous save.
   def email_changed_previously?
@@ -86,7 +85,7 @@ module Authlogic::ActsAsAuthentic::EmailToken::Confirmation
   # 
   #   acts_as_authentic do |c|
   #     c.confirmation_mailer_class = :MyOtherMailer
-  #     c.confirmation_mailer_method = :whatever_message
+  #     c.confirmation_mailer_method = :a_method_name
   #   end
   # 
   # Recommended usage looks something like this:
@@ -105,7 +104,7 @@ module Authlogic::ActsAsAuthentic::EmailToken::Confirmation
   #     def update
   #       if current_user.update_attributes existing_user_params
   #         if current_user.maybe_deliver_email_confirmation! self
-  #           redirect_to(edit_user_url, notice: 'Confirmation email sent.'
+  #           redirect_to edit_user_url, notice: 'Confirmation email sent.'
   #         else
   #           redirect_to edit_user_url, notice: 'Account settings saved.'
   #         end
