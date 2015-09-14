@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    authlogic_email_token (0.0.4)
+    authlogic_email_token (0.0.5)
       authlogic (~> 3)
 
 GEM
