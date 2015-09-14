@@ -60,7 +60,7 @@ class Confirmation < Minitest::Test
     o.update_attributes! new_email: 'b@example.com'
     c = mock # The mailer requires a controller.
     m = mock # The mailer will return this mock message.
-    m.expects(:deliver)
+    m.expects(:deliver_now)
     UserMailer.expects(:email_confirmation).with(o, c).returns(m)
     assert o.maybe_deliver_email_confirmation!(c)
   end
@@ -70,7 +70,7 @@ class Confirmation < Minitest::Test
     o.update_attributes! new_email: 'b@example.com'
     c = mock # The mailer requires a controller.
     m = mock # The mailer will return this mock message.
-    m.expects(:deliver)
+    m.expects(:deliver_now)
     CustomUserMailer.expects(:custom_method).with(o, c).returns(m)
     assert o.maybe_deliver_email_confirmation!(c)
   end

@@ -3,7 +3,7 @@ ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":me
 class ActiveRecord::ConnectionAdapters::TableDefinition
   def authlogic
     string :persistence_token
-    timestamps
+    timestamps null: true
   end
 end
 

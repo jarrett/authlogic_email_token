@@ -74,11 +74,14 @@ module Authlogic::ActsAsAuthentic::EmailToken::Confirmation
   # 
   #   UserMailer.email_confirmation(user, controller)
   # 
-  # If you don't like that, you can override it by providing a block to this method. E.g.:
+  # Also by default, this method calls #deliver_now on the message returned by
+  # +UserMailer.email_confirmation+.
+  # 
+  # You can override either of these defaults by providing a block to this method. E.g.:
   # 
   #   # This would be in a controller action, so self refers to the controller.
   #   user.maybe_deliver_email_confirmation!(self) do
-  #     MyOtherMailer.whatever_message(user).deliver
+  #     MyOtherMailer.whatever_message(user).deliver_later
   #   end
   # 
   # Or, instead of providing a block, you can override the default names like so:
@@ -133,7 +136,7 @@ module Authlogic::ActsAsAuthentic::EmailToken::Confirmation
         klass = name.split('::').inject(Object) do |mod, klass|
           mod.const_get klass
         end
-        klass.send(self.class.confirmation_mailer_method, self, controller).deliver
+        klass.send(self.class.confirmation_mailer_method, self, controller).deliver_now
       end
       true
     else
