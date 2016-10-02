@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name         = 'authlogic_email_token'
-  s.version      = '0.0.5'
-  s.date         = '2015-09-14'
+  s.version      = '0.0.6'
+  s.date         = '2016-10-02'
   s.summary      = 'Authlogic extension for email confirmation'
   s.description  = "Adds email_token and email_token_updated_at columns. Works like " +
                    "Authlogic's perishable_token, but doesn't reset on every request. " +
@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.license      = 'MIT'
   
   s.add_runtime_dependency 'authlogic', '~> 3'
-  s.add_development_dependency 'rails', '~> 4'
+  s.add_development_dependency 'rails', '~> 5'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'minitest', '~> 5'
   s.add_development_dependency 'minitest-reporters', '~> 1'
