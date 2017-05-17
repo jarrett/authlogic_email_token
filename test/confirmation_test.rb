@@ -31,7 +31,7 @@ class Confirmation < Minitest::Test
       assert_equal 'b@example.com', o.email
       assert_nil o.read_attribute(:new_email)
       assert_equal 'IMvEDB6NJIm5Z7cSe2a', o.email_token
-      assert_equal t.utc, o.email_token_updated_at.utc
+      assert_equal t.to_i, o.email_token_updated_at.to_i
     end
   end
   
