@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.license      = 'MIT'
   
   s.add_runtime_dependency 'authlogic', '~> 3'
-  s.add_development_dependency 'rails', '~> 5'
+  s.add_development_dependency 'rails', '>= 4.2'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'minitest', '~> 5'
   s.add_development_dependency 'minitest-reporters', '~> 1'
