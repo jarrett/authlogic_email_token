@@ -7,5 +7,5 @@ rvm:
   #- ruby-head
 gemfile:
   - rails-4.gemfile
-  - 5.gemfile
+  - rails-5.gemfile
 script: bundle exec rake test
