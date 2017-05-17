@@ -140,7 +140,7 @@ DEPENDENCIES
   minitest (~> 5)
   minitest-reporters (~> 1)
   mocha (~> 1)
-  rails (~> 5)
+  rails (>= 4.2)
   sqlite3
   timecop (~> 0)
 
