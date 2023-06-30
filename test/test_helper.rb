@@ -4,7 +4,7 @@ require 'minitest'
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'timecop'
-require 'mocha/mini_test'
+require 'mocha/minitest'
 require 'database_cleaner'
 require 'rails'
 Minitest::Reporters.use! Minitest::Reporters::DefaultReporter.new
