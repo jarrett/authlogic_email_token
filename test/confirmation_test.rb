@@ -57,7 +57,7 @@ class Confirmation < Minitest::Test
   
   def test_send_email_confirmation_when_changing_address
     o = Confirmable.create! email: 'a@example.com', new_email: nil
-    o.update_attributes! new_email: 'b@example.com'
+    o.update new_email: 'b@example.com'
     c = mock # The mailer requires a controller.
     m = mock # The mailer will return this mock message.
     m.expects(:deliver_now)
@@ -67,7 +67,7 @@ class Confirmation < Minitest::Test
   
   def test_custom_mailer_class_and_method
     o = CustomMailerClassAndMethod.create! email: 'a@example.com', new_email: nil
-    o.update_attributes! new_email: 'b@example.com'
+    o.update new_email: 'b@example.com'
     c = mock # The mailer requires a controller.
     m = mock # The mailer will return this mock message.
     m.expects(:deliver_now)
@@ -83,7 +83,7 @@ class Confirmation < Minitest::Test
   
   def test_email_changed_previously_returns_false_for_clean_record_with_new_email_set_to_same_value
     o = Confirmable.create! email: 'a@example.com'
-    o.update_attributes! new_email: 'a@example.com'
+    o.update new_email: 'a@example.com'
     o.reload
     refute o.email_changed_previously?
   end
@@ -91,28 +91,28 @@ class Confirmation < Minitest::Test
   def test_email_changed_previously_returns_true_when_email_changed
     o = Confirmable.create! email: 'a@example.com'
     o.reload
-    o.update_attributes! email: 'b@example.com'
+    o.update email: 'b@example.com'
     assert o.email_changed_previously?
   end
   
   def test_email_changed_previously_returns_false_when_email_set_to_same_value
     o = Confirmable.create! email: 'a@example.com'
     o.reload
-    o.update_attributes! email: 'a@example.com'
+    o.update email: 'a@example.com'
     refute o.email_changed_previously?
   end
   
   def test_email_changed_previously_returns_true_when_new_email_changed
     o = Confirmable.create! email: 'a@example.com'
     o.reload
-    o.update_attributes! new_email: 'b@example.com'
+    o.update new_email: 'b@example.com'
     assert o.email_changed_previously?
   end
   
   def test_email_changed_previously_returns_false_when_new_email_set_to_same_value
     o = Confirmable.create! email: 'a@example.com', new_email: 'b@example.com'
     o.reload
-    o.update_attributes! new_email: 'b@example.com'
+    o.update new_email: 'b@example.com'
     refute o.email_changed_previously?
   end
   
